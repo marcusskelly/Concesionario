@@ -1,0 +1,92 @@
+
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>SecondHandMarket</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="../static/css/styles.css"
+          th:href="@{/css/styles.css}">
+
+</head>
+
+<body style="padding: 10px">
+
+<div class="jumbotron">
+    <div class="container text-center">
+        <h1>Alquileres ocasion</h1>
+    </div>
+</div>
+<nav class="navbar navbar-inverse">
+    <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+            <li>
+                <a class="btn btn-success mb-2" style="color: white" th:href="@{/}">Inicio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/alquilar/}">Alquilar</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <a class="nav-link" th:href="@{/coches/mostrar}">Coches</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/alquileres/}">Alquileres</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <a class="nav-link" th:href="@{/coches/agregar}">Agregar Coche</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-8">
+            <div class="col-md-8">
+                <img src="https://placehold.it/1200x600?text=SIN%20IMAGEN"
+                     th:src="${#strings.isEmpty(coche.imagen)} ? 'https://placehold.it/1200x600?text=SIN%20IMAGEN' : ${coche.imagen}"
+                     class="img-responsive center-block" alt="Image">
+            </div>
+            <div class="col-md-4">
+                <div class="text-center">
+
+                    <h5><strong>Matricula: <span
+                            th:text="${coche.matricula}"></span></strong><br>
+                        <strong>Existencias: <span th:text="${coche.existencia}"></span></strong></h5>
+                </div>
+                <h3 th:text="${coche.marca}"></h3>
+                <div>
+                </div>
+                <div class="pull-right">
+                    <h4>
+                        <strong th:text="${#numbers.formatCurrency(coche.precio)}"></strong>
+                    </h4>
+                </div>
+                <a th:href="@{/alquilar/terminar}"
+                   type="button" class="btn btn-lg btn-success btn-product">
+                    <span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;Alquilar
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+<br>
+<br>
+
+
+<script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+        th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Concesionario de alquileres</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link th:href="@{../../static/css/styles.css}" rel="stylesheet">
+</head>
+<body style="padding: 10px">
+<div class="jumbotron">
+    <div class="container text-center">
+        <h1>Alquileres ocasion</h1>
+    </div>
+</div>
+<nav class="navbar navbar-inverse">
+    <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+            <li>
+                <a class="btn btn-success mb-2" style="color: white" th:href="@{/}">Inicio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/alquilar/}">Alquilar</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <a class="nav-link" th:href="@{/coches/mostrar}">Coches</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/alquileres/}">Alquileres</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <a class="nav-link" th:href="@{/coches/agregar}">Agregar Coche</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/info/}">Como funciona</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<main>
+    <div class="col-12">
+        <h2>Alquileres</h2>
+        <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+             th:text="${mensaje}"
+             class="alert">
+        </div>
+        <a class="btn btn-success mb-2" style="margin-bottom: 15px" th:href="@{/alquilar/}">Agregar a lista</a>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th>Coches</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="alquiler : ${alquileres}">
+                    <td th:text="${alquiler.fechaYHora}"></td>
+                    <td th:text="${alquiler.total}"></td>
+                    <td>
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Marca</th>
+                                <th>Matricula</th>
+                                <th>Meses totales</th>
+                                <th>Precio</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="coche: ${alquiler.cocheAlquilados}">
+                                <td th:text="${coche.marca}"></td>
+                                <td th:text="${coche.matricula}"></td>
+                                <td th:text="${coche.meses}"></td>
+                                <td th:text="${coche.precio}"></td>
+                                <td th:text="${coche.total}"></td>
+                                <td sec:authorize="isAuthenticated()">
+                                    <form th:action="@{/alquileres/eliminarAlquiler}" method="post">
+                                        <input type="hidden" name="id" th:value="${alquiler.id}"/>
+                                        <button type="submit" class="btn btn-danger" onclick="if(!(confirm('Vas a eliminar un registro. Estás seguro?'))) return false">Eliminar <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<footer class="px-2 py-2 fixed-bottom bg-dark" xmlns:th="http://www.w3.org/1999/xhtml">
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", () => {
+            const menu = document.querySelector("#menu"),
+                botonMenu = document.querySelector("#botonMenu");
+            if (menu) {
+                botonMenu.addEventListener("click", () => menu.classList.toggle("show"));
+            }
+        });
+    </script>
+</footer>
+</body>
+</html>

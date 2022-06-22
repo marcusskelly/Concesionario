@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Concesionario</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="../static/css/styles.css"
+          th:href="@{/css/styles.css}">
+
+    <style>
+
+        body{
+            margin-top: -50px;
+        }
+        h1{
+            font-family: 'Festive';
+            text-align: center;
+            border: solid;
+            width: 100%;
+            justify-content: center;
+
+
+            background: #aaa;
+
+            -webkit-box-shadow: 2px 2px 5px #999;
+            -moz-box-shadow: 2px 2px 5px #999;
+            box-shadow: 10px 10px 5px #999;
+
+        }
+
+
+
+        .principal{
+            opacity: 1;
+            width: 99%;
+            height: 425px;
+            border-radius: 10px;
+            padding: 10px 10px 10px 10px;
+            background-color: aquamarine;
+            background-image: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)),url("https://grupomadurga.com/wp-content/uploads/2019/04/Concesionario-Audi-en-Soria-Soria-Motor-Grupo-Madurga.jpg");
+        }
+
+        .principal2{
+            margin-top: 80px;
+            opacity: 1;
+            width: 99%;
+            height: 425px;
+            border-radius: 10px;
+            padding: 10px 10px 10px 10px;
+            background-color: aquamarine;
+            background-image: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)),url("https://bipicar.com/_nuxt/img/fecb26c.png");
+        }
+
+        .principal > img{
+            height: 98%;
+            width: 50%;
+        }
+
+        .primeraCaja{
+
+            width: 40%;
+            height: 400px;
+            float: left;
+            border: solid;
+            padding: 10px;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+
+        }
+
+        .primeraCaja > h2{
+
+            font-size: 40px;
+            border: solid;
+            background: #aaa;
+        }
+
+        .primeraCaja > img{
+
+
+            border: solid;
+
+            margin-top: 20px;
+        }
+
+        table{
+            border: solid;
+
+        }
+    </style>
+
+</head>
+<body id="page-top">
+<h1>Alquileres ocasion</h1>
+
+<div class="principal">
+    <img src="https://1000marcas.net/wp-content/uploads/2019/12/Audi-logo.jpg" alt="logo">
+    <div class="primeraCaja">
+
+        <h2 sec:authorize="!isAuthenticated()">Iniciar sesión</h2>
+
+        <th:block sec:authorize="!isAuthenticated()">
+        <form method="POST" th:action="@{/login}">
+            <label>Nombre:</label><br>
+            <input type="text" id="username" name="username"><br>
+            <label>Password</label><br>
+            <input type="password" id="password" name="password"><br><br>
+            <button name="submit" type="submit">Inicia sesión</button>
+            <a th:href="@{/usuario/agregar}">Regístrate aquí</a>
+        </form>
+        </th:block>
+        <th:block sec:authorize="isAuthenticated()">
+            <a href="#" th:onclick="javascript:doLogout();">Salir</a>
+            <form th:action="@{/logout}" method="POST" th:hidden="true" id="logoutForm"></form>
+        </th:block>
+        <br>
+        <table>
+            <tr>
+                <th>Contacto</th>
+
+            </tr>
+            <tr>
+                <td>Telefono</td>
+                <td>91235468</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>concesionario@gmail.com</td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+<nav class="navbar navbar-inverse">
+
+    <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+            <li>
+                <a class="btn btn-success mb-2" style="color: white" th:href="@{/}">Inicio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/alquilar/}">Alquilar</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <a class="nav-link" th:href="@{/coches/mostrar}">Coches</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <a class="nav-link" th:href="@{/usuario/mostrar}">Ver usuarios</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/alquileres/}">Alquileres</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <a class="nav-link" th:href="@{/coches/agregar}">Agregar Coche</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/info/}">Como funciona</a>
+            </li>
+            <form class="navbar-form navbar-right">
+                <input type="text" class="form-control" placeholder="Buscar..."
+                       name="q" th:value="${param.q}">
+            </form>
+        </ul>
+    </div>
+</nav>
+
+
+
+<div class="container" id="coches">
+    <div class="row">
+        <div class="col-lg-3 " style="width: 300px; height: 300px" th:each="coche : ${coches}">
+            <div class="panel panel-default panel-producto">
+                <a th:href="@{/coche/{id}(id=${coche.id})}"
+                   style="display: none"></a>
+                <div class="panel-heading">
+                    <span th:text="${coche.marca}">Marca del Coche</span>
+                </div>
+                <div class="panel-body">
+                    <img src="http://placehold.it/350x260"
+                         th:src="${#strings.isEmpty(coche.imagen)} ? 'http://placehold.it/350x260' : ${coche.imagen}"
+                         class="img-responsive" alt="a" width="400" height="400"/>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-6 precio">
+								<span class="precio"
+                                      th:text="${#numbers.formatCurrency(coche.precio)}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button class="accordion" onclick="funcionSimposio()" id="sec-buttons">Contáctanos</button>
+<br>
+<div class="principal2" id="simposio" style="display: none">
+    <iframe src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=es&amp;q=Cale%20Sierra%20de%20Cad%C3%AD,%20Madrid+(Mi%20nombre%20de%20egocios)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" frameborder="0" style="border:0; width: 50%; height: 400px;margin-left: 20px"></iframe>
+    <div class="primeraCaja">
+
+        <h2>Formulario de contacto</h2>
+            <form method="POST" >
+                <label>Nombre:</label><br>
+                <input type="text"  name="username"><br>
+                <label>Email</label><br>
+                <input type="text"  name="email"><br><br>
+                <button name="submit" type="submit">Enviar</button>
+            </form>
+        <br>
+        <table>
+            <tr>
+                <th>Contacto</th>
+
+            </tr>
+            <tr>
+                <td>Telefono</td>
+                <td>91235468</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>concesionario@gmail.com</td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+<br>
+<br>
+
+<script>
+
+    function doLogout() {
+
+        $('#logoutForm').submit();
+
+}</script>
+
+<script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+        th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+<script type="text/javascript">
+    $(document).ready(
+        function() {
+            $('.panel-producto').children().not(".panel-footer").click(
+                function() {
+                    window.location = $(this).parent().find("a")
+                        .attr("href");
+                    return false;
+                });
+        });
+</script>
+
+<script>
+
+    function funcionSimposio() {
+
+        var buttons = document.getElementById("sec-buttons");
+        var simposio = document.getElementById("simposio");
+
+
+        buttons.style.display = "block";
+        if (simposio.style.display === "none") {
+            simposio.style.display = "block";
+        } else {
+            simposio.style.display = "block";
+        }
+
+    }
+</script>
+</body>
+</html>

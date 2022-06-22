@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Concesionario de alquileres</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link th:href="@{../../static/css/styles.css}" rel="stylesheet">
+
+    <style>
+        .contenedor-principal {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, auto);
+            padding-left: 2px;
+            padding-right: 2px;
+        }
+
+        .contenedor-1{
+            align-self: center;
+            justify-self: center;
+            grid-column: 1/7;
+            padding-bottom: 100px;
+        }
+
+        .contenedor-1 > h1,
+        .contenedor-1 > p {
+            text-align: center;
+
+        }
+        .contenedor-1 > h1{
+            font-weight: 800;
+        }
+
+        .contenedor-2 {
+            align-self: center;
+            justify-self: center;
+            grid-column: 1/7;
+
+            display: grid;
+            grid-template-columns: repeat(2, 1fr)
+        }
+
+        .contenedor-2-hijo-1 > h2{
+            margin-left: 15px;
+            font-weight: 800;
+        }
+        .contenedor-2-hijo-1 > p{
+            padding-right: 20px;
+            padding-left: 20px;
+            font-weight: 600;
+        }
+        .contenedor-2-hijo-1 > li{
+            list-style-image: url(https://www.freepng.es/png-nbmc2r/);
+        }
+
+        .contenedor-2-hijo-2 > img{
+            border-radius: 50px;
+            margin-left: 15px;
+        }
+
+        .contenedor-3 {
+            align-self: center;
+            justify-self: center;
+            grid-column: 1/7;
+
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .titulo-contenedor-3 {
+            grid-column: 1/7;
+            margin-left: 15px;
+            font-weight: 800;
+
+        }
+
+        .contenedor-3-hijo-1 {
+            grid-column:  1/3;
+        }
+
+        .contenedor-3-hijo-2 {
+            grid-column: 3/5;
+
+        }
+        .contenedor-3-hijo-1 > h3{
+            margin-left: 15px;
+            font-weight: 800;
+        }
+        .contenedor-3-hijo-1 > p{
+            padding-right: 20px;
+            padding-left: 20px;
+            font-weight: 600;
+        }
+
+        .contenedor-3-hijo-2 > h3{
+            margin-left: 15px;
+            font-weight: 800;
+        }
+        .contenedor-3-hijo-2 > p{
+            padding-right: 20px;
+            padding-left: 20px;
+            font-weight: 600;
+        }
+
+
+        .contenedor-4 {
+            align-self: center;
+            justify-self: center;
+            grid-column: 1/7;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr)
+        }
+
+        .contenedor-4-hijo-1 {
+            padding-top: 20px;
+        }
+        .contenedor-4-hijo-1 > img{
+           border-radius: 50px;
+            margin-left: 15px;
+        }
+
+        .contenedor-4-hijo-2 {
+            padding-bottom: 100px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr)
+        }
+
+        .titulo-contenedor-4 {
+            grid-column: 1/5;
+            margin-left: 15px;
+            font-weight: 800;
+        }
+
+        .boton-contenedor-4 {
+            grid-column: 1/5;
+            justify-self: start;
+            margin-top: 30px;
+            margin-left: 30px;
+            border: solid;
+            border-radius: 50px;
+            background: #5cb85c;
+            opacity: 1;
+            width: 240px;
+            height: 62px;
+            color: white;
+            cursor: pointer;
+            -webkit-transition-duration: 0.4s; /* Safari */
+            transition-duration: 0.4s;
+        }
+
+
+        .contenedor-4-nieto-1 {
+            grid-column: 1/3;
+
+        }
+
+        .contenedor-4-nieto-2 {
+            grid-column: 3/5;
+
+        }
+
+        .contenedor-5 {
+            align-self: center;
+            justify-self: center;
+            grid-column: 1/7;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr)
+        }
+
+        .contenedor-5-hijo-1 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr)
+        }
+
+        .titulo-contenedor-5 {
+            grid-column: 1/4;
+            margin-left: 15px;
+            font-weight: 800;
+        }
+
+        .contenedor-5-nieto-1 {
+            grid-column: 1/3;
+
+        }
+        .contenedor-5-nieto-1 >li{
+           font-weight: 600;
+
+        }
+
+        .contenedor-5-nieto-2 {
+            grid-column: 3/5;
+
+        }
+        .contenedor-5-nieto-2 >li{
+            font-weight: 600;
+
+        }
+
+        .contenedor-5-hijo-2 > img{
+            border-radius: 50px;
+            margin-left: 15px;
+        }
+
+    </style>
+</head>
+<body style="padding: 5px">
+<div class="jumbotron">
+    <div class="container text-center">
+        <h1>Alquileres ocasion</h1>
+    </div>
+</div>
+<nav class="navbar navbar-inverse">
+    <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+            <li>
+                <a class="btn btn-success mb-2" style="color: white" th:href="@{/}">Inicio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/alquilar/}">Alquilar</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/alquileres/}">Alquileres</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<main>
+<div class="contenedor-principal">
+    <div class="contenedor-1">
+        <h1>Suscríbete a la nueva forma de tener coche</h1>
+        <p>Aquí encontrarás todo lo que necesitas saber sobre nuestras suscripciones.     </p>
+    </div>
+
+    <div  class="contenedor-2">
+        <div class="contenedor-2-hijo-1">
+            <h2>Todo incluido en una sola cuota</h2>
+            <p>La cuota mensual de tu suscripción es el precio final que tendrás que pagar cada mes. Sin sorpresas de última hora. Está todo incluido, solo tendrás que hacerte cargo de la gasolina.</p>
+            <ul>
+                <li>Seguro a todo riesgo</li>
+                <li>Mantenimiento y servicio</li>
+                <li>ITV</li>
+                <li>Asistencia en carretera</li>
+                <li>Impuesto de circulación</li>
+            </ul>
+        </div>
+        </ul>
+        <div class="contenedor-2-hijo-2">
+            <img src="https://cdn.pixabay.com/photo/2017/09/09/18/24/driving-2732934__340.jpg">
+        </div>
+    </div>
+
+    <div class="contenedor-3">
+        <h2 class="titulo-contenedor-3">Crea tu suscripción a medida</h2>
+        <div class="contenedor-3-hijo-1">
+            <h3>Elige la flexibilidad</h3>
+            <p>Con Bipi puedes elegir cuánto tiempo te quedas con el coche: desde 3 hasta 36 meses. Cuanto mayor sea la permanecia mínima, menor será la cuota mensual.</p>
+            <ul>
+                <li>Al finalizar tu permanencia mínima, renovaremos mes a mes tu suscripción hasta que nos digas lo contrario.</li>
+                <li>Cambia de categoría o modelo de coche según cambien tus necesidades.           </li>
+            </ul>
+        </div>
+        <div class="contenedor-3-hijo-2">
+            <h3>Configura el kilometraje que necesitas</h3>
+            <p>Las suscripciones incluyen 1.000 kilómetros al mes. Si crees que no son suficientes, puedes añadir packs de kilómetros según necesites.</p>
+            <ul>
+                <li>Personaliza el kilometraje segun tus necesidades.</li>
+                <li>Si tus necesidades cambian, podrás modificar el kilometraje.         </li>
+            </ul>
+
+            <div class="contenedor-3-hijo-3">
+            </div>
+        </div>
+    </div>
+    <div class="contenedor-4">
+        <div class="contenedor-4-hijo-1">
+            <img src="https://cdn.pixabay.com/photo/2016/02/22/20/22/bmw-1216469__340.jpg">
+        </div>
+
+        <div class="contenedor-4-hijo-2">
+            <h2 class="titulo-contenedor-4">¿Cómo me suscribo?</h2>
+
+            <div class="contenedor-4-nieto-1">
+                <ul>
+                    <li style="font-weight: 600">Elige tu coche</li>
+                    <p>Elige el vehículo que mejor se adapte a tus necesidades entre los disponibles en nuestra flota: configura kilometraje y duración de tu suscripción.</p>
+                    <li style="font-weight: 600">Regístrate y suscríbete</li>
+                    <p>Regístrate. A continuación, sube tu documentación y sigue en tiempo real el estado de tu solicitud.</p>
+                </ul>
+            </div>
+            <div class="contenedor-4-nieto-2">
+                <ul>
+                    <li style="font-weight: 600">Entrega de tu vehículo</li>
+                    <p>Una vez aprobada tu suscripción, puedes recoger tu vehículo en cualquiera de nuestros puntos de entrega o elegir que te lo llevemos a donde quieras.</p>
+                    <li style="font-weight: 600">Cambiamos contigo</li>
+                    <p>Cambia de categoría o modelo según cambien tus necesidades. En alquileres ocasión, siempre tienes el coche que necesitas.</p>
+                </ul>
+            </div>
+            <button class="boton-contenedor-4"><a class="nav-link" th:href="@{/alquilar/}">Elegir mi coche</button></a>
+        </div>
+    </div>
+
+    <div class="contenedor-5">
+        <div class="contenedor-5-hijo-1">
+
+            <h2 class="titulo-contenedor-5">Una vez iniciada tu suscripción</h2>
+            <div class="contenedor-5-nieto-1">
+                <ul>
+                    <li style="font-weight: 600">Seguro</li>
+                    <p>Cada suscripción a un coche con Alquiler Ocasión incluye en su cuota mensual un seguro a todo riesgo con franquicia, con el que estarás cubierto al 100% en caso de daños propios o accidente. Podrás reducir la franquicia si así lo deseas.</p>
+                    <li style="font-weight: 600">Multas de tráfico</li>
+                    <p>Cuando recibamos una multa o infracción de tráfico, serás notificado vía correo electrónico. Alquileres ocasión gestionará y tramitará la multa en tu nombre, para evitar retrasos que conlleven costes adicionales y pérdida de puntos.</p>
+                </ul>
+            </div>
+
+            <div class="contenedor-5-nieto-2">
+                <ul>
+                    <li style="font-weight: 600">Mantenimiento y servicio</li>
+                    <p>En caso de que tu coche necesite mantenimiento o servicio, serás notificado para que lo lleves a uno de nuestros centros de servicio en toda España. El mantenimiento del coche está incluido en tu cuota mensual, sin costes adicionales.</p>
+                    <li style="font-weight: 600">Cambio de coche</li>
+                    <p>Si tus necesidades cambian, y necesitas cambiar de coche a otro modelo o categoría diferente, no hay problema: llámanos y te ayudamos a elegir el coche que mejor se adapte a tus necesidades.</p>
+                </ul>
+                <div class="contenedor-5-nieto-3">
+                </div>
+            </div>
+        </div>
+
+        <div class="contenedor-5-hijo-2">
+            <img src="https://cdn.pixabay.com/photo/2014/07/31/23/33/driving-407181__340.jpg">
+        </div>
+    </div>
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+<script src="../../static/js/app.js" th:src="@{/js/app.js}"></script>
+
+<footer class="px-2 py-2 fixed-bottom bg-dark" xmlns:th="http://www.w3.org/1999/xhtml">
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", () => {
+            const menu = document.querySelector("#menu"),
+                botonMenu = document.querySelector("#botonMenu");
+            if (menu) {
+                botonMenu.addEventListener("click", () => menu.classList.toggle("show"));
+            }
+        });
+    </script>
+</footer>
+</body>
+</html>

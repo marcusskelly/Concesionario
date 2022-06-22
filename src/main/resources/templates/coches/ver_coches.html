@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Concesionario de alquileres</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link th:href="@{../../static/css/styles.css}" rel="stylesheet">
+</head>
+<body style="padding: 10px">
+<div class="jumbotron">
+    <div class="container text-center">
+        <h1>Alquileres ocasion</h1>
+    </div>
+</div>
+<nav class="navbar navbar-inverse">
+
+    <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+            <li>
+                <a class="btn btn-success mb-2" style="color: white" th:href="@{/}">Inicio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/alquilar/}">Alquilar</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/coches/mostrar}">Coches</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/alquileres/}">Alquileres</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/coches/agregar}">Agregar Coche</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<main>
+    <div class="col-12">
+        <h2>Coches</h2>
+        <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+             th:text="${mensaje}"
+             class="alert">
+        </div>
+        <a class="btn btn-success mb-2" style="margin-bottom: 15px" th:href="@{/coches/agregar}">Agregar</a>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Marca</th>
+                    <th>Matricula</th>
+                    <th>Precio</th>
+                    <th>Existencia</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each=" coche : ${coches}">
+                    <td style="width: 15%; height:100%"><img width="200" height="120" th:src="${coche.imagen}"></td>
+                    <td th:text="${coche.marca}"></td>
+                    <td th:text="${coche.matricula}"></td>
+                    <td th:text="${coche.precio}"></td>
+                    <td th:text="${coche.existencia}"></td>
+                    <td>
+                        <a class="btn btn-warning" th:href="@{/coches/editar/} + ${coche.id}">Editar <i
+                                class="fa fa-edit"></i></a>
+                    </td>
+                    <td>
+                        <form th:action="@{/coches/eliminar}" method="post">
+                            <input type="hidden" name="id" th:value="${coche.id}"/>
+                            <button type="submit" class="btn btn-danger" onclick="if(!(confirm('Vas a eliminar un registro. Estás seguro?'))) return false">Eliminar <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+
+        <div th:if="${coches.totalPages != 1}"
+             class="form-group col-md-11 pagination-centered">
+
+            <ul class="pagination">
+
+                <!-- Si el número de página es cero, deshabilitamos el enlace -->
+
+                <li th:class="${coches.number == 0} ? disabled">
+                    <!-- Este enlace nos debe llevar a la primera página --> <a
+                        class="pageLink" th:href="@{/coches/mostrar/(page=1)}">&laquo;</a>
+
+                </li>
+
+                <!-- Si el número de página es cero, deshabilitamos el enlace -->
+
+                <li th:class="${coches.number == 0} ? disabled">
+                    <!-- Este enlace nos debe llevar a la página anterior --> <a
+                        class="pageLink"
+                        th:href="@{/coches/mostrar/(page=${coches.number})}">&larr;</a>
+
+                </li>
+
+                <!-- Este bucle genera los enlaces para las demás páginas -->
+
+                <li
+                        th:class="${coches.number == (page-1)} ? 'active pointer-disabled'"
+                        th:each="page : ${#numbers.sequence(1, coches.totalPages)}">
+
+                    <a class="pageLink" th:href="@{/coches/mostrar/(page=${page})}"
+                       th:text="${page}"></a>
+
+                </li>
+
+                <!-- Enlace a la siguiente página; si estamos en la última queda desabilitado  -->
+
+                <li
+                        th:class="${coches.number == (coches.totalPages - 1)} ? disabled">
+
+                    <a class="pageLink"
+                       th:href="@{/coches/mostrar/(page=${coches.number + 2})}">&rarr;</a>
+
+                </li>
+
+                <!-- Enlace a la última página; si estamos en la última queda desabilitado  -->
+
+                <li
+                        th:class="${coches.number == (coches.totalPages - 1)} ? disabled">
+
+                    <a class="pageLink"
+                       th:href="@{/coches/mostrar/(page=${coches.totalPages})}">&raquo;</a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+    </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+<script src="../../static/js/app.js" th:src="@{/js/app.js}"></script>
+
+<footer class="px-2 py-2 fixed-bottom bg-dark" xmlns:th="http://www.w3.org/1999/xhtml">
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", () => {
+            const menu = document.querySelector("#menu"),
+                botonMenu = document.querySelector("#botonMenu");
+            if (menu) {
+                botonMenu.addEventListener("click", () => menu.classList.toggle("show"));
+            }
+        });
+    </script>
+</footer>
+</body>
+</html>

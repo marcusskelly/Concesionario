@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Concesionario de alquileres</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link th:href="@{../../static/css/styles.css}" rel="stylesheet">
+</head>
+<body style="padding: 10px">
+
+<div class="jumbotron">
+    <div class="container text-center">
+        <h1>Alquileres ocasion</h1>
+    </div>
+</div>
+<nav class="navbar navbar-inverse">
+    <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+            <li>
+                <a class="btn btn-success mb-2" style="color: white" th:href="@{/}">Inicio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/alquilar/}">Alquilar</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/coches/mostrar}" sec:authorize="isAuthenticated()">Coches</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/alquileres/}">Alquileres</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/coches/agregar}" sec:authorize="isAuthenticated()">Agregar Coche</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<main>
+    <div class="col-12">
+        <h2>Añadir usuario</h2>
+        <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+             th:text="${mensaje}"
+             class="alert">
+        </div>
+        <form th:object="${usuario}" th:action="@{/usuario/agregar}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="nombre">Nombre de usuario</label>
+                <input autocomplete="off" autofocus th:field="*{nombre}" id="nombre"
+                       placeholder="Escribe el nombre de usuario" type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{nombre}"></div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input autocomplete="off" th:field="*{email}" id="email" placeholder="Escribe el email"
+                       type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{email}"></div>
+
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input autocomplete="off" th:field="*{password}" id="password"
+                       placeholder="password" type="password"
+                       class="form-control" th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{password}"></div>
+
+            </div>
+            <div class="form-group">
+                <label for="imagen">Imagen de perfil</label>
+                <input autocomplete="off"  id="imagen" placeholder="Imagen de perfil"
+                       type="file" class="form-control input-file" name="file" th:classappend="${#fields.hasErrors('imagen')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{imagen}"></div>
+            </div>
+            <button class="btn btn-success" type="submit">Guardar</button>
+            &nbsp;<a class="btn btn-warning" th:href="@{/}">Volver al inicio</a>
+        </form>
+    </div>
+</main>
+
+
+<footer class="px-2 py-2 fixed-bottom bg-dark" xmlns:th="http://www.w3.org/1999/xhtml">
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", () => {
+            const menu = document.querySelector("#menu"),
+                botonMenu = document.querySelector("#botonMenu");
+            if (menu) {
+                botonMenu.addEventListener("click", () => menu.classList.toggle("show"));
+            }
+        });
+    </script>
+</footer>
+</body>
+</html>
